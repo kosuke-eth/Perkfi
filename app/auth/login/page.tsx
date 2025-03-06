@@ -1,12 +1,30 @@
+"use client"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { useAuth } from "@/app/context/AuthContext"
 
 export default function Login() {
+  const router = useRouter()
+  const { login } = useAuth()
+
+  const handleLogin = () => {
+    login()
+    router.back()
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -24,13 +42,21 @@ export default function Login() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">パスワード</Label>
-                <Link href="/auth/forgot-password" className="text-sm text-purple-600 hover:underline">
+                <Link
+                  href="/auth/forgot-password"
+                  className="text-sm text-purple-600 hover:underline"
+                >
                   パスワードをお忘れですか？
                 </Link>
               </div>
               <Input id="password" type="password" required />
             </div>
-            <Button className="w-full">ログイン</Button>
+            <Button
+              variant="ghost"
+              className="border border-gray-400 text-gray-700 hover:bg-gray-100"
+            >
+              <Link href="/auth/login">ログイン</Link>
+            </Button>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -46,9 +72,9 @@ export default function Login() {
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm">
               アカウントをお持ちでない方は
-              <Link href="/auth/register" className="text-purple-600 hover:underline ml-1">
-                新規登録
-              </Link>
+              <Button className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600">
+                <Link href="/auth/register">新規登録</Link>
+              </Button>
             </div>
           </CardFooter>
         </Card>
@@ -57,4 +83,3 @@ export default function Login() {
     </div>
   )
 }
-

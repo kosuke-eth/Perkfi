@@ -1,12 +1,26 @@
+"use client"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Gift, CreditCard, Phone, BookOpen, ShoppingBag, ArrowRight, TrendingUp, Zap, Shield } from "lucide-react"
+import {
+  Gift,
+  CreditCard,
+  Phone,
+  BookOpen,
+  ShoppingBag,
+  ArrowRight,
+  TrendingUp,
+  Zap,
+  Shield,
+} from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { useAuth } from "@/app/context/AuthContext"
 
 export default function Home() {
+  const { isLoggedIn } = useAuth()
+
   const categories = [
     { name: "商品券", icon: <ShoppingBag className="h-10 w-10 mb-2" />, count: 124 },
     { name: "ギフト券", icon: <Gift className="h-10 w-10 mb-2" />, count: 87 },
@@ -15,41 +29,69 @@ export default function Home() {
     { name: "図書カード", icon: <BookOpen className="h-10 w-10 mb-2" />, count: 45 },
   ]
 
-  // Featured優待券 with more realistic data
+  // Featured優待券（提供いただいた企業情報・画像に合わせて更新）
   const featuredItems = [
     {
       id: 1,
-      company: "ABC株式会社",
-      type: "商品券",
-      value: 5000,
-      remaining: 12,
-      image: "/placeholder.svg?height=300&width=300&text=ABC商品券",
+      company: "ソフトバンク(9434)",
+      validUntil: "優待権利確定月3月",
+      type: "PayPayポイント",
+      description: "ポイントサービス 長期保有特典",
+      minInvestment: "2.1万",
+      shareCount: "100株",
+      yield: "---%",
+      dividendYield: "4.01%",
+      totalYield: "4.01%",
+      value: 21000,
+      remaining: 10,
+      image: "/perks-images/1.png",
       popular: true,
     },
     {
       id: 2,
-      company: "XYZ商事",
-      type: "ギフト券",
-      value: 3000,
+      company: "ＴＢＫ(7277)",
+      validUntil: "優待権利確定月3月",
+      type: "東北地方ブランド米、またはQUOカード",
+      description: "食料品 金券 長期保有特典",
+      minInvestment: "3.0万",
+      shareCount: "100株",
+      yield: "---%",
+      dividendYield: "2.66%",
+      totalYield: "2.66%",
+      value: 30000,
       remaining: 5,
-      image: "/placeholder.svg?height=300&width=300&text=XYZギフト券",
+      image: "/perks-images/2.png",
       new: true,
     },
     {
       id: 3,
-      company: "123ホールディングス",
-      type: "テレホンカード",
-      value: 10000,
+      company: "レダックス(7602)",
+      validUntil: "優待権利確定月3月",
+      type: "株主優待券",
+      description: "暮らし",
+      minInvestment: "1.3万",
+      shareCount: "100株",
+      yield: "218.97%",
+      dividendYield: "1.46%",
+      totalYield: "220.43%",
+      value: 13000,
       remaining: 8,
-      image: "/placeholder.svg?height=300&width=300&text=123テレカ",
+      image: "/perks-images/3.png",
     },
     {
       id: 4,
-      company: "テック企業",
-      type: "クオカード",
-      value: 2000,
+      company: "イオンモール(8905)",
+      validUntil: "優待権利確定月2月",
+      type: "自社商品券",
+      description: "金券 長期保有特典 社会貢献",
+      minInvestment: "23.5万",
+      shareCount: "100株",
+      yield: "1.27%",
+      dividendYield: "2.11%",
+      totalYield: "3.38%",
+      value: 235000,
       remaining: 20,
-      image: "/placeholder.svg?height=300&width=300&text=テッククオカード",
+      image: "/perks-images/4.png",
     },
   ]
 
@@ -78,9 +120,12 @@ export default function Home() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
-                  <Link href="/auth/register">新規登録</Link>
-                </Button>
+                {/* ログインしていなければ、新規登録ボタンを表示 */}
+                {!isLoggedIn && (
+                  <Button className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600">
+                    <Link href="/auth/register">新規登録</Link>
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -189,9 +234,9 @@ export default function Home() {
                 <Link href={`/優待/${item.id}`} key={item.id}>
                   <Card className="優待-card border-0 shadow-lg">
                     <CardContent className="p-0">
-                      <div className="優待-card-image">
+                      <div className="優待-card-image relative">
                         <img
-                          src={item.image || "/placeholder.svg"}
+                          src={item.image}
                           alt={`${item.company}の${item.type}`}
                           className="w-full h-full object-cover"
                         />
@@ -200,11 +245,13 @@ export default function Home() {
                           {item.new && <Badge className="bg-green-500">新着</Badge>}
                         </div>
                       </div>
-                      <div className="優待-card-content">
+                      <div className="優待-card-content p-4">
                         <div className="text-sm text-gray-500 mb-1">{item.type}</div>
                         <h3 className="font-semibold text-lg mb-1">{item.company}の株主優待</h3>
                         <div className="flex justify-between items-center mt-3">
-                          <span className="font-bold text-lg text-purple-600">{item.value.toLocaleString()}円相当</span>
+                          <span className="font-bold text-lg text-purple-600">
+                            {item.value.toLocaleString()}円相当
+                          </span>
                           <span className="text-sm text-gray-500">残り{item.remaining}枚</span>
                         </div>
                       </div>
@@ -281,14 +328,20 @@ export default function Home() {
             <p className="text-xl mb-8 max-w-2xl mx-auto text-white opacity-90">
               簡単な登録で株主優待デジタル券の取引を始めることができます。 証券会社アカウントとの連携も可能です。
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" className="bg-white text-purple-700 hover:bg-gray-100" asChild>
-                <Link href="/auth/register">新規登録</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
-                <Link href="/auth/login">ログイン</Link>
-              </Button>
-            </div>
+            {/* ログインしていなければ、CTAボタンを表示 */}
+            {!isLoggedIn && (
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Button className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600">
+                  <Link href="/auth/register">新規登録</Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="border border-gray-400 text-gray-700 hover:bg-gray-100"
+                >
+                  <Link href="/auth/login">ログイン</Link>
+                </Button>
+              </div>
+            )}
           </div>
         </section>
       </main>
@@ -296,4 +349,3 @@ export default function Home() {
     </div>
   )
 }
-

@@ -7,82 +7,109 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 
 export default function Profile() {
+  // 更新後の企業情報（id:1～6）を用いて保有中のNFTとする
+  const ownedNfts = [
+    {
+      id: 1,
+      company: "ソフトバンク(9434)",
+      type: "PayPayポイント",
+      value: 21000,
+      image: "/perks-images/1.png",
+      purchaseDate: "2024年4月15日",
+      status: "未使用",
+    },
+    {
+      id: 2,
+      company: "ＴＢＫ(7277)",
+      type: "東北地方ブランド米、またはQUOカード",
+      value: 30000,
+      image: "/perks-images/2.png",
+      purchaseDate: "2024年4月16日",
+      status: "未使用",
+    },
+    {
+      id: 3,
+      company: "レダックス(7602)",
+      type: "株主優待券",
+      value: 13000,
+      image: "/perks-images/3.png",
+      purchaseDate: "2024年4月17日",
+      status: "未使用",
+    },
+    {
+      id: 4,
+      company: "イオンモール(8905)",
+      type: "自社商品券",
+      value: 235000,
+      image: "/perks-images/4.png",
+      purchaseDate: "2024年4月18日",
+      status: "未使用",
+    },
+    {
+      id: 5,
+      company: "日本電信電話(9432)",
+      type: "dポイント付与",
+      value: 14000,
+      image: "/perks-images/5.png",
+      purchaseDate: "2024年4月19日",
+      status: "使用済み",
+    },
+    {
+      id: 6,
+      company: "ゆうちょ銀行(7182)",
+      type: "オリジナルカタログ商品",
+      value: 753000,
+      image: "/perks-images/6.png",
+      purchaseDate: "2024年4月20日",
+      status: "使用済み",
+    },
+  ]
+
   // Mock user data
   const userData = {
     name: "山田太郎",
     email: "yamada@example.com",
     walletBalance: 25000,
-    nftsOwned: 3,
+    nftsOwned: ownedNfts.length,
     nftsSold: 2,
   }
 
-  // Mock owned NFTs
-  const ownedNfts = [
-    {
-      id: 1,
-      company: "ABC株式会社",
-      type: "商品券",
-      value: 5000,
-      image: "/placeholder.svg?height=300&width=300&text=ABC商品券",
-      purchaseDate: "2024年4月15日",
-      status: "未使用",
-    },
-    {
-      id: 3,
-      company: "123ホールディングス",
-      type: "テレホンカード",
-      value: 10000,
-      image: "/placeholder.svg?height=300&width=300&text=123テレカ",
-      purchaseDate: "2024年5月2日",
-      status: "未使用",
-    },
-    {
-      id: 5,
-      company: "グルメ株式会社",
-      type: "商品券",
-      value: 8000,
-      image: "/placeholder.svg?height=300&width=300&text=グルメ商品券",
-      purchaseDate: "2024年5月10日",
-      status: "使用済み",
-    },
-  ]
-
-  // Mock transaction history
+  // Mock transaction history（必要に応じて更新）
   const transactions = [
     {
       id: 1,
       type: "購入",
-      nftName: "ABC株式会社 商品券",
-      amount: 5000,
+      nftName: "ソフトバンク(9434) PayPayポイント",
+      amount: 21000,
       date: "2024年4月15日",
     },
     {
       id: 2,
       type: "購入",
-      nftName: "123ホールディングス テレホンカード",
-      amount: 10000,
-      date: "2024年5月2日",
+      nftName: "ＴＢＫ(7277) 東北地方ブランド米、またはQUOカード",
+      amount: 30000,
+      date: "2024年4月16日",
     },
     {
       id: 3,
       type: "購入",
-      nftName: "グルメ株式会社 商品券",
-      amount: 8000,
-      date: "2024年5月10日",
+      nftName: "レダックス(7602) 株主優待券",
+      amount: 13000,
+      date: "2024年4月17日",
     },
     {
       id: 4,
       type: "売却",
-      nftName: "XYZ商事 ギフト券",
-      amount: 2700,
-      date: "2024年5月15日",
+      nftName: "イオンモール(8905) 自社商品券",
+      amount: 200000,
+      date: "2024年4月18日",
     },
     {
       id: 5,
       type: "売却",
-      nftName: "テック企業 クオカード",
-      amount: 1800,
-      date: "2024年5月20日",
+      nftName: "日本電信電話(9432) dポイント付与",
+      amount: 14000,
+      date: "2024年4月19日",
     },
   ]
 
@@ -183,18 +210,22 @@ export default function Profile() {
                     {ownedNfts.map((nft) => (
                       <Card
                         key={nft.id}
-                        className={`hover:shadow-lg transition-shadow ${nft.status === "使用済み" ? "opacity-70" : ""}`}
+                        className={`hover:shadow-lg transition-shadow ${
+                          nft.status === "使用済み" ? "opacity-70" : ""
+                        }`}
                       >
                         <CardContent className="p-0">
                           <div className="aspect-square relative bg-gray-200">
                             <img
-                              src={nft.image || "/placeholder.svg"}
+                              src={nft.image}
                               alt={`${nft.company}の${nft.type}`}
                               className="w-full h-full object-cover"
                             />
                             {nft.status === "使用済み" && (
                               <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                <span className="bg-red-500 text-white px-3 py-1 rounded-full font-bold">使用済み</span>
+                                <span className="bg-red-500 text-white px-3 py-1 rounded-full font-bold">
+                                  使用済み
+                                </span>
                               </div>
                             )}
                           </div>
@@ -202,7 +233,9 @@ export default function Profile() {
                             <div className="text-sm text-gray-500 mb-1">{nft.type}</div>
                             <h3 className="font-semibold mb-1">{nft.company}の株主優待</h3>
                             <div className="flex justify-between items-center mt-2">
-                              <span className="font-bold text-purple-600">{nft.value.toLocaleString()}円相当</span>
+                              <span className="font-bold text-purple-600">
+                                {nft.value.toLocaleString()}円相当
+                              </span>
                               <span className="text-sm text-gray-500">{nft.status}</span>
                             </div>
                             <div className="mt-4">
@@ -274,4 +307,3 @@ export default function Profile() {
     </div>
   )
 }
-

@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -13,9 +12,10 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Gift, LogIn, Menu, Package, Settings, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/app/context/AuthContext"
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { isLoggedIn, logout } = useAuth()
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -74,7 +74,10 @@ export default function Navbar() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Link href="/help" className="px-3 py-2 text-gray-600 hover:text-purple-600 rounded-md transition-colors">
+              <Link
+                href="/help"
+                className="px-3 py-2 text-gray-600 hover:text-purple-600 rounded-md transition-colors"
+              >
                 ヘルプ
               </Link>
             </nav>
@@ -115,7 +118,7 @@ export default function Navbar() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => setIsLoggedIn(false)} className="flex items-center">
+                    <DropdownMenuItem onClick={logout} className="flex items-center">
                       <LogIn className="h-4 w-4 mr-2" />
                       ログアウト
                     </DropdownMenuItem>
@@ -124,11 +127,14 @@ export default function Navbar() {
               </>
             ) : (
               <div className="hidden md:flex space-x-2">
-                <Button variant="ghost" onClick={() => setIsLoggedIn(true)}>
-                  ログイン
+                <Button
+                  variant="ghost"
+                  className="border border-gray-400 text-gray-700 hover:bg-gray-100"
+                >
+                  <Link href="/auth/login">ログイン</Link>
                 </Button>
                 <Button className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600">
-                  新規登録
+                  <Link href="/auth/register">新規登録</Link>
                 </Button>
               </div>
             )}
@@ -140,25 +146,43 @@ export default function Navbar() {
               </SheetTrigger>
               <SheetContent>
                 <div className="flex flex-col space-y-4 mt-6">
-                  <Link href="/marketplace" className="text-lg font-medium hover:text-purple-600">
+                  <Link
+                    href="/marketplace"
+                    className="text-lg font-medium hover:text-purple-600"
+                  >
                     マーケットプレイス
                   </Link>
                   <div className="space-y-2 pl-2">
                     <p className="text-lg font-medium">Perkfiについて</p>
-                    <Link href="/about" className="block text-gray-600 hover:text-purple-600 py-1">
+                    <Link
+                      href="/about"
+                      className="block text-gray-600 hover:text-purple-600 py-1"
+                    >
                       サービス概要
                     </Link>
-                    <Link href="/about/how-it-works" className="block text-gray-600 hover:text-purple-600 py-1">
+                    <Link
+                      href="/about/how-it-works"
+                      className="block text-gray-600 hover:text-purple-600 py-1"
+                    >
                       ご利用の流れ
                     </Link>
-                    <Link href="/about/for-companies" className="block text-gray-600 hover:text-purple-600 py-1">
+                    <Link
+                      href="/about/for-companies"
+                      className="block text-gray-600 hover:text-purple-600 py-1"
+                    >
                       企業の方へ
                     </Link>
-                    <Link href="/about/technology" className="block text-gray-600 hover:text-purple-600 py-1">
+                    <Link
+                      href="/about/technology"
+                      className="block text-gray-600 hover:text-purple-600 py-1"
+                    >
                       テクノロジー
                     </Link>
                   </div>
-                  <Link href="/help" className="text-lg font-medium hover:text-purple-600">
+                  <Link
+                    href="/help"
+                    className="text-lg font-medium hover:text-purple-600"
+                  >
                     ヘルプ
                   </Link>
                   {isLoggedIn ? (
@@ -173,24 +197,37 @@ export default function Navbar() {
                             <p className="text-xs text-gray-500">yamada@example.com</p>
                           </div>
                         </div>
-                        <Link href="/profile" className="block text-gray-600 hover:text-purple-600 py-2">
+                        <Link
+                          href="/profile"
+                          className="block text-gray-600 hover:text-purple-600 py-2"
+                        >
                           マイ優待券
                         </Link>
-                        <Link href="/profile/settings" className="block text-gray-600 hover:text-purple-600 py-2">
+                        <Link
+                          href="/profile/settings"
+                          className="block text-gray-600 hover:text-purple-600 py-2"
+                        >
                           設定
                         </Link>
-                        <Button variant="outline" className="w-full mt-4" onClick={() => setIsLoggedIn(false)}>
+                        <Button
+                          variant="outline"
+                          className="w-full mt-4"
+                          onClick={logout}
+                        >
                           ログアウト
                         </Button>
                       </div>
                     </>
                   ) : (
                     <div className="border-t pt-4 mt-4 flex flex-col space-y-2">
-                      <Button variant="outline" onClick={() => setIsLoggedIn(true)}>
-                        ログイン
+                      <Button
+                        variant="ghost"
+                        className="border border-gray-400 text-gray-700 hover:bg-gray-100"
+                      >
+                        <Link href="/auth/login">ログイン</Link>
                       </Button>
                       <Button className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600">
-                        新規登録
+                        <Link href="/auth/register">新規登録</Link>
                       </Button>
                     </div>
                   )}
@@ -203,4 +240,3 @@ export default function Navbar() {
     </header>
   )
 }
-

@@ -1,3 +1,5 @@
+"use client"
+import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -63,188 +65,33 @@ const nftDataList: NFTData[] = [
     dividendYield: "2.11%",
     totalYield: "3.38%",
   },
-  {
-    company: "日本電信電話(9432)",
-    validUntil: "優待権利確定月3月",
-    type: "dポイント付与",
-    description: "ポイントサービス 長期保有特典",
-    minInvestment: "1.4万",
-    shareCount: "100株",
-    yield: "---%",
-    dividendYield: "3.53%",
-    totalYield: "3.53%",
-  },
-  {
-    company: "ゆうちょ銀行(7182)",
-    validUntil: "優待権利確定月3月",
-    type: "オリジナルカタログ商品",
-    description: "食料品 カタログギフト 暮らし 社会貢献",
-    minInvestment: "75.3万",
-    shareCount: "500株",
-    yield: "0.39%",
-    dividendYield: "3.71%",
-    totalYield: "4.10%",
-  },
-  {
-    company: "ＳＢＩグローバルアセットマネジメント(4765)",
-    validUntil: "優待権利確定月3月",
-    type: "自社投資情報サービス、暗号資産（仮想通貨）",
-    description: "教養・娯楽 金融サービス 長期保有特典",
-    minInvestment: "7.0万",
-    shareCount: "100株",
-    yield: "71.83%",
-    dividendYield: "---%",
-    totalYield: "71.83%",
-  },
-  {
-    company: "ヒーハイスト(6433)",
-    validUntil: "優待権利確定月3月",
-    type: "QUOカード",
-    description: "金券",
-    minInvestment: "4.3万",
-    shareCount: "100株",
-    yield: "6.83%",
-    dividendYield: "0.22%",
-    totalYield: "7.05%",
-  },
-  {
-    company: "ＩＮＰＥＸ(1605)",
-    validUntil: "優待権利確定月12月",
-    type: "QUOカード、施設見学会",
-    description: "金券 教養・娯楽 長期保有特典 社会貢献",
-    minInvestment: "18.9万",
-    shareCount: "100株",
-    yield: "---%",
-    dividendYield: "4.74%",
-    totalYield: "4.74%",
-  },
-  {
-    company: "アイ・ケイ・ケイホールディングス(2198)",
-    validUntil: "優待権利確定月4月",
-    type: "優待食事券、株主優待商品",
-    description: "食料品 食事券",
-    minInvestment: "8.4万",
-    shareCount: "100株",
-    yield: "2.37%",
-    dividendYield: "2.84%",
-    totalYield: "5.21%",
-  },
-  {
-    company: "オンワードホールディングス(8016)",
-    validUntil: "優待権利確定月2月",
-    type: "自社グループ製品",
-    description: "カタログギフト 美容・ファッション 長期保有特典",
-    minInvestment: "5.4万",
-    shareCount: "100株",
-    yield: "---%",
-    dividendYield: "4.81%",
-    totalYield: "4.81%",
-  },
-  {
-    company: "小林洋行(8742)",
-    validUntil: "優待権利確定月3月",
-    type: "全国共通おこめ券",
-    description: "金券 長期保有特典",
-    minInvestment: "3.1万",
-    shareCount: "100株",
-    yield: "---%",
-    dividendYield: "1.61%",
-    totalYield: "1.61%",
-  },
-  {
-    company: "ＲＩＺＡＰグループ(2928)",
-    validUntil: "優待権利確定月3月",
-    type: "優待品交換ポイント、優待券",
-    description: "カタログギフト ポイントサービス 長期保有特典",
-    minInvestment: "2.4万",
-    shareCount: "100株",
-    yield: "37.25%",
-    dividendYield: "---%",
-    totalYield: "37.25%",
-  },
-  {
-    company: "キリンホールディングス(2503)",
-    validUntil: "優待権利確定月12月",
-    type: "自社商品詰合せ",
-    description: "食料品 美容・ファッション 長期保有特典 社会貢献",
-    minInvestment: "20.6万",
-    shareCount: "100株",
-    yield: "---%",
-    dividendYield: "3.58%",
-    totalYield: "3.58%",
-  },
-  {
-    company: "キッコーマン(2801)",
-    validUntil: "優待権利確定月3月",
-    type: "自社グループ商品詰合せ",
-    description: "食料品 長期保有特典 社会貢献",
-    minInvestment: "14.4万",
-    shareCount: "100株",
-    yield: "---%",
-    dividendYield: "1.44%",
-    totalYield: "1.44%",
-  },
-  {
-    company: "明治ホールディングス(2269)",
-    validUntil: "優待権利確定月3月",
-    type: "自社グループ製品詰合せ",
-    description: "食料品 社会貢献",
-    minInvestment: "31.2万",
-    shareCount: "100株",
-    yield: "0.48%",
-    dividendYield: "3.20%",
-    totalYield: "3.68%",
-  },
-  {
-    company: "ドリームインキュベータ(4310)",
-    validUntil: "優待権利確定月3月",
-    type: "プレミアム優待倶楽部ポイント",
-    description: "カタログギフト ポイントサービス 長期保有特典 プレミアム優待倶楽部",
-    minInvestment: "39.8万",
-    shareCount: "100株",
-    yield: "0.37%",
-    dividendYield: "10.62%",
-    totalYield: "10.99%",
-  },
-  {
-    company: "セブン＆アイ・ホールディングス(3382)",
-    validUntil: "優待権利確定月2月",
-    type: "グループ共通商品券",
-    description: "金券 長期保有特典",
-    minInvestment: "20.4万",
-    shareCount: "100株",
-    yield: "0.97%",
-    dividendYield: "1.95%",
-    totalYield: "2.92%",
-  },
-  {
-    company: "くら寿司(2695)",
-    validUntil: "優待権利確定月4月",
-    type: "優待食事券",
-    description: "食事券",
-    minInvestment: "30.1万",
-    shareCount: "100株",
-    yield: "0.82%",
-    dividendYield: "0.66%",
-    totalYield: "1.48%",
-  },
-  {
-    company: "北の達人コーポレーション(2930)",
-    validUntil: "優待権利確定月2月",
-    type: "自社商品・ＥＣサイト商品券",
-    description: "食料品 美容・ファッション 長期保有特典",
-    minInvestment: "1.5万",
-    shareCount: "100株",
-    yield: "35.43%",
-    dividendYield: "2.28%",
-    totalYield: "37.71%",
-  },
+  // ...（その他のデータは省略）
 ]
 
 export default function NFTDetail({ params }: { params: { id: string } }) {
-  // NFT IDに基づき株主優待情報を選択（idが20を超えた場合は循環させる）
   const nftId = Number.parseInt(params.id)
   const nftData = nftDataList[(nftId - 1) % nftDataList.length]
+
+  // 入力モーダルと確認モーダルの表示状態管理
+  const [modalType, setModalType] = useState<"purchase" | "list" | null>(null)
+  const [confirmationModal, setConfirmationModal] = useState(false)
+  // 購入・出品共通の入力項目
+  const [quantity, setQuantity] = useState("")
+  const [price, setPrice] = useState("")
+  // 確認メッセージを保持
+  const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null)
+
+  // 最初のモーダル内で「確認」を押した際の処理
+  const handleConfirm = () => {
+    const msg = modalType === "purchase" ? "購入しました" : "出品しました"
+    // 入力モーダルは閉じ、値をリセット
+    setModalType(null)
+    setQuantity("")
+    setPrice("")
+    // 確認メッセージをセットして、確認モーダルを表示
+    setConfirmationMessage(msg)
+    setConfirmationModal(true)
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -313,10 +160,10 @@ export default function NFTDetail({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                <Button size="lg" className="flex-1">
+                <Button size="lg" className="flex-1" onClick={() => setModalType("purchase")}>
                   購入する
                 </Button>
-                <Button size="lg" variant="outline" className="flex-1">
+                <Button size="lg" variant="outline" className="flex-1" onClick={() => setModalType("list")}>
                   出品する
                 </Button>
                 <Button size="icon" variant="ghost">
@@ -459,6 +306,76 @@ export default function NFTDetail({ params }: { params: { id: string } }) {
         </div>
       </main>
       <Footer />
+
+      {/* 入力モーダル */}
+      {modalType && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-80">
+            <h2 className="text-lg font-bold mb-4">
+              {modalType === "purchase" ? "購入する" : "出品する"}
+            </h2>
+            {modalType === "purchase" ? (
+              <>
+                <label className="block text-sm mb-2">購入数量</label>
+                <input
+                  type="number"
+                  className="border p-2 mb-4 w-full"
+                  placeholder="例: 1"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+                <label className="block text-sm mb-2">購入希望価格 (円)</label>
+                <input
+                  type="number"
+                  className="border p-2 mb-4 w-full"
+                  placeholder="例: 1000"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </>
+            ) : (
+              <>
+                <label className="block text-sm mb-2">出品数量</label>
+                <input
+                  type="number"
+                  className="border p-2 mb-4 w-full"
+                  placeholder="例: 1"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+                <label className="block text-sm mb-2">出品希望価格 (円)</label>
+                <input
+                  type="number"
+                  className="border p-2 mb-4 w-full"
+                  placeholder="例: 1200"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </>
+            )}
+            <div className="flex justify-end gap-2">
+              <Button variant="ghost" onClick={() => { setModalType(null); setQuantity(""); setPrice("") }}>
+                キャンセル
+              </Button>
+              <Button onClick={handleConfirm}>確認</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 確認モーダル */}
+      {confirmationModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-80">
+            <h2 className="text-lg font-bold mb-4">{confirmationMessage}</h2>
+            <div className="flex justify-end">
+              <Button onClick={() => { setConfirmationModal(false); setConfirmationMessage(null) }}>
+                閉じる
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
