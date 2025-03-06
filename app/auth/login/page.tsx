@@ -1,6 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -19,8 +20,11 @@ import { useAuth } from "@/app/context/AuthContext"
 export default function Login() {
   const router = useRouter()
   const { login } = useAuth()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleLogin = () => {
+    // ここでバリデーションやAPIリクエストなどを追加可能
     login()
     router.back()
   }
@@ -37,7 +41,14 @@ export default function Login() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">メールアドレス</Label>
-              <Input id="email" type="email" placeholder="your@email.com" required />
+              <Input
+                id="email"
+                type="email"
+                placeholder="your@email.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -49,13 +60,19 @@ export default function Login() {
                   パスワードをお忘れですか？
                 </Link>
               </div>
-              <Input id="password" type="password" required />
+              <Input
+                id="password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <Button
-              variant="ghost"
-              className="border border-gray-400 text-gray-700 hover:bg-gray-100"
+              onClick={handleLogin}
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600"
             >
-              <Link href="/auth/login">ログイン</Link>
+              ログイン
             </Button>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -72,9 +89,9 @@ export default function Login() {
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm">
               アカウントをお持ちでない方は
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600">
-                <Link href="/auth/register">新規登録</Link>
-              </Button>
+              <Link href="/auth/register" className="text-purple-600 hover:underline ml-1">
+                新規登録
+              </Link>
             </div>
           </CardFooter>
         </Card>
