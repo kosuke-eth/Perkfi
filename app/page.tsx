@@ -101,7 +101,10 @@ export default function Home() {
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-indigo-600 hero-pattern"></div>
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url(/bg.jpg)" }}
+          ></div>
           <div className="absolute inset-0 bg-black opacity-30"></div>
           <div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
             <div className="max-w-3xl">
@@ -120,7 +123,6 @@ export default function Home() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                {/* ログインしていなければ、新規登録ボタンを表示 */}
                 {!isLoggedIn && (
                   <Button className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600">
                     <Link href="/auth/register">新規登録</Link>
